@@ -1,7 +1,7 @@
 #include <stdio.h>
 void main()
 {
-	unsigned short naturals[3], x, y;
+	unsigned short naturals[8], x, y;
 	size_t lenNaturals = sizeof(naturals) / sizeof(naturals[0]);
 
 	// Read in eight natural numbers to a set
