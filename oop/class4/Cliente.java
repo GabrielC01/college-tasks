@@ -2,10 +2,10 @@ public class Cliente
 {
 	private String cpf;
 	private String nome;
-	private String sexo;
+	private char sexo;
 	private String telefone;
 
-	public Cliente(String cpf, String nome, String sexo, String telefone) {
+	public Cliente(String cpf, String nome, char sexo, String telefone) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.sexo = sexo;
@@ -28,11 +28,11 @@ public class Cliente
 		this.nome = nome;
 	}
 
-	public String getSexo() {
+	public char getSexo() {
 		return this.sexo;
 	}
 
-	public void setSexo(String sexo) {
+	public void setSexo(char sexo) {
 		this.sexo = sexo;
 	}
 
