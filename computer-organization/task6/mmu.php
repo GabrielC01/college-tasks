@@ -1,7 +1,10 @@
 <?php
-// Programa para simular gerenciamento
-// de memoria.
+/*  
+    Programa para simular gerenciamento
+    de memoria.
+*/
 
+// Tamanho da memoria
 define('MEM_SIZE', array_fill(0, 16, 0));
 
 // Unidade de Gerenciamento de Memoria
