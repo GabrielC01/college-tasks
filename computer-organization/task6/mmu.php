@@ -4,46 +4,81 @@
     de memoria.
 */
 
-// Tamanho da memoria
-define('MEM_SIZE', array_fill(0, 16, 0));
+/* Tamanho da memoria (16KiB) */
+define('MEM_SIZE', 16);
 
-// Unidade de Gerenciamento de Memoria
-function mmu($mode, $mar = null, $mbr = null) {
-	// RAM estatica e nao global
-	//static $ram = SplFixedArray(MEM_SIZE);
-	static $ram = MEM_SIZE;
+/* Memoria DRAM */
+class DRam {
+	private $dram;
 
-	// Modo de leitura
-	if ($mode == 0) {
-		try {
-			return $ram[$mar];
-		} catch (OutOfBoundsException $error) {
-			return $error;
-		}
+	function __construct() {
+		$this->dram = new SplFixedArray(MEM_SIZE);
+		$this->dram = array_fill(0, count($this->dram), 0);
 	}
-	
-	// Modo de escrita
-	if ($mode == 1) {
+
+	// Leitura de dado
+	function read($mar) {
 		try {
-			$ram[$mar] = $mbr;
-			return true;
+			return $this->dram[$mar];
 		} catch (OutOfBoundsException $error) {
 			return $error;
 		}
 	}
 
-	// Retorna o pente
-	if ($mode == 2) return implode(' ', $ram);
+	// Escrita de dado
+	function write($mar, $mbr=null) {
+		try {
+			$this->dram[$mar] = $mbr;
+		} catch (OutOfBoundsException $error) {
+			return $error;
+		}
+	}
+
+	// "Visao" geral da memoria
+	function get_dram() {
+		return $this->dram;
+	}
 }
 
-/* Uso */
-// Escrita de dados
-mmu(1, 0, 10);
-mmu(1, 10, 'hi');
+/* Excecao para insuficiente de memoria */
+class NoAvailableMemoryException extends Exception {}
 
-// Leitura de dados
-echo mmu(0, 0) . PHP_EOL;
-echo mmu(0, 10) . PHP_EOL;
+/* Unidade de Gerenciamento de Memoria */
+class MemoryManagementUnit {
+	private $dram;
+	function __construct() {
+		$this->dram = new DRam();
+	}
 
-// Mostra o pente todo
-echo '[ ' . mmu(2) . ' ]' . PHP_EOL;
+	// Escrita de dado
+	function write($mbr = null) {
+		// Busca endereco disponivel
+		$mar = array_search(0, $this->dram->get_dram());
+
+		if ($mar === false) throw new NoAvailableMemoryException();
+		else  $this->dram->write($mar, $mbr);
+	}
+
+	// Leitura da memoria toda
+	function read() {
+		return implode(' ', $this->dram->get_dram());
+	}
+}
+
+/* Subprograma principal */
+function main() {
+	$mmu = new MemoryManagementUnit();
+	
+	// Escrita de algumas coisas
+	$mmu->write(10);
+	$mmu->write(10);	
+	$mmu->write(50);	
+
+	// Leitura da memoria
+	echo $mmu->read() . PHP_EOL;
+}
+
+main();
+
+// EOF
+
