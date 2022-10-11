@@ -1,13 +1,18 @@
 // Func. obter o n-ésimo elemento da sequência de Fibonacci,
 // considerando, neste caso, que se inicia em 1.
 fn fibo(nth: i32) -> i64 {
-    let mut n = 0;
-    for i in 2..=nth {
-        n = i - 1 + i - 2;
+    let mut a = 0;
+    let mut b = 1;
+    for _i in 1..nth {
+        a = 2*b + a;
+        b = a - b;
+        a = a - b;
     }
-    n.into()
+    b.into()
 }
 
 fn main() {
-    println!("{}", fibo(4));
+    println!("{}", fibo(5));
+    println!("{}", fibo(6));
+    println!("{}", fibo(7));
 }
