@@ -35,6 +35,21 @@ int remove(unsigned int ht[], size_t ht_length, unsigned int key) {
 	return i;
 }
 
+// Imprimir tabela.
+void printHt(unsigned int ht, size_t ht_length) {
+	for (size_t i = 0; i < ht_length; i++) {
+		printf("%u ", ht[i]);
+	}
+	printf("\b");
+}
+
 int main() {
+	size_t ht_length = 11;
+	unsigned int ht[ht_length];
+	unsigned int test[] = { 4, 17, 13, 35, 25, 11, 2, 10, 32 };
+	size_t length_test = sizeof(test) / sizeof(test[0]);
+	for (size_t i = 0; i < length_test; i++) {
+		insert(ht, ht_length, test[i]);
+	}
 	return 0;
 }
