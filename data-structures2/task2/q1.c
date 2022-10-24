@@ -24,6 +24,15 @@ int insert(unsigned int ht[], size_t ht_length, unsigned int key) {
 
 // Remover registro da tabela.
 int remove(unsigned int ht[], size_t ht_length, unsigned int key) {
+	if (key == 0) return -1; // Registro vazio.
+							 //
+	int i = (int) hash(ht_length, key);
+	if (ht[i] == key) {
+		ht[i] = 0;
+	} else {
+		i = -1;
+	}
+	return i;
 }
 
 int main() {
