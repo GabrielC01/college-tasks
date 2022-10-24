@@ -17,7 +17,12 @@ int insert(unsigned int ht[], size_t ht_length, unsigned int key) {
 		while (j != i && ht[j] != 0) {
 			j = (j + 1) % ht_length;
 		}
-		i = (j == i) ? -1 : j;
+		if (j == i) {
+			i = -1;
+		} else {
+			i = j;
+			ht[j] = key;
+		}
 	}
 	return i;
 }
@@ -44,8 +49,8 @@ void printHt(unsigned int ht[], size_t ht_length) {
 }
 
 int main() {
-	size_t ht_length = 11;
-	unsigned int ht[ht_length];
+	unsigned int ht[11] = { 0 }; // Necessário para inicializar com zeros.
+	size_t ht_length = sizeof(ht) / sizeof(ht[0]);
 
 	// a) Inserção dos registros 4, 17, 13, 35, 25, 11, 2, 10, 32.
 	unsigned int test[] = { 4, 17, 13, 35, 25, 11, 2, 10, 32 };
