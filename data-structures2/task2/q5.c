@@ -19,6 +19,14 @@ struct List {
 };
 
 
+// Criar nova lista.
+List* newList() {
+	List* list = (List*) malloc(sizeof(List));
+	list->first = NULL;
+	list->last = NULL;
+}
+
+
 // Adicionar à lista.
 void addToList(List* list, unsigned int data) {
 	ListNode* new_node = (ListNode*) malloc(sizeof(ListNode));
@@ -82,7 +90,7 @@ int main() {
 	List* ht2[11] = { NULL };
 	unsigned int test[] = { 5, 28, 19, 15, 20, 33, 12, 7, 10 };
 	size_t length_ht1 = sizeof(ht1) / sizeof(ht1[0]);
-	size_t length_ht2 = sizeof(ht2) / sizeof(h2[0]);
+	size_t length_ht2 = sizeof(ht2) / sizeof(ht2[0]);
 	size_t length_test = sizeof(test) / sizeof(test[0]);
 
 	/* Tabela de 9 posições. */
@@ -93,7 +101,7 @@ int main() {
 
 	/* Tabela de 11 posições. */
 	for (size_t i = 0; i < length_test; i++) {
-		addToht(ht2, length_ht2, test[i]);
+		addToHt(ht2, length_ht2, test[i]);
 	}
 	printHt(ht2, length_ht2);
 
