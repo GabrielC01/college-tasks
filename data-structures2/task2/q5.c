@@ -4,33 +4,58 @@
 #include <stdlib.h>
 
 
-// Pilha (lista simplesmente encadeada).
-typedef struct StackNode StackNode;
+// Lista encadeada.
+typedef struct ListNode ListNode;
+typedef struct List List;
 
-struct StackNode {
+struct ListNode {
 	unsigned int data;
-	StackNode* next;
+	ListNode* next;
+};
+
+struct List {
+	ListNode* first;
+	ListNode* last;
 };
 
 
-// Inicializar nova pilha.
-StackNode* newStack() {
-	return (StackNode*) malloc(sizeof(StackNode));
-}
-
-
-// Inserir elemento à pilha.
-void addToStack(StackNode* top, unsigned int data) {
-	StackNode* new_node = (StackNode*) malloc(sizeof(StackNode));
+// Adicionar à lista.
+void addToList(List* list, unsigned int data) {
+	ListNode* new_node = (ListNode*) malloc(sizeof(ListNode));
 	new_node->data = data;
 	new_node->next = NULL;
-	top->next = new_node;
+	list->last->next = new_node;
+	list->last = new_node;
 }
 
-// Remover topo da pilha.
-void pop(StackNode* top) {
-	top = NULL;
+
+// Remover elemento da lista.
+int rmFromList(List* list, unsigned int data) {
+	ListNode* curr_node = (ListNode*) malloc(sizeof(ListNode));
+	while (curr_node != NULL && curr_node->data != data) {
+		curr_node = curr_node->next;
+	}
+	return curr_node->data == data ? data : -1;
 }
+
+
+// Função de dispersão.
+size_t hash(size_t ht_length, unsigned int key) {
+	return key % ht_length;
+}
+
+
+// Inserir elemento à tabela.
+int addToHt(unsigned int ht, size_t ht_length, unsigned int key) {
+	int i = (int) hash(ht_length, key);
+}
+
+
+// Remover elemento da tabela.
+int rmFromHt(unsigned int ht, size_t ht_length, unsigned int key) {
+	int i = (int) hash(ht_length, key);
+}
+
 
 // Controlador.
 int main() {
