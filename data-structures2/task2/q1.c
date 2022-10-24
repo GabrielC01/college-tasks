@@ -7,6 +7,27 @@ size_t hash(size_t ht_length, unsigned int key) {
 	return key % ht_length;
 }
 
+
+// Função de endereçamento aberto para encontrar registro.
+size_t rehashFilled(unsigned int ht[], size_t ht_length, size_t hv, unsigned int key) {
+	size_t j = (hv + 1) % ht_length;
+	while (j != hv && ht[j] != key) {
+		j = (j + 1) % ht_length;
+	}
+	return j == hv ? -1 : j;
+}
+
+
+// Função de endereçamento aberto para encontrar célula vazia.
+size_t rehashInsertion(unsigned int ht[], size_t ht_length, size_t hv, unsigned int key) {
+	size_t j = (hv + 1) % ht_length;
+	while (j != hv && ht[j] != 0) {
+		j = (j + 1) % ht_length;
+	}
+	return j == hv ? -1 : j;
+}
+
+
 // Inserir registro na tabela.
 int insert(unsigned int ht[], size_t ht_length, unsigned int key) {
 	int i = (int) hash(ht_length, key);
@@ -14,22 +35,14 @@ int insert(unsigned int ht[], size_t ht_length, unsigned int key) {
 		if (ht[i] == 0) {
 			ht[i] = key;
 		} else if (ht[i] != key) {
-			size_t j = (i + 1) % ht_length;
-			while (j != i && ht[j] != 0) {
-				j = (j + 1) % ht_length;
-			}
-			if (j == i) {
-				i = -1;
-			} else {
-				i = j;
-				ht[j] = key;
-			}
+			i = rehashInsertion(ht, ht_length, i, key);
 		}
 	} else {
 		i = -1;
 	}
 	return i;
 }
+
 
 // Remover registro da tabela.
 int rm(unsigned int ht[], size_t ht_length, unsigned int key) {
@@ -38,23 +51,14 @@ int rm(unsigned int ht[], size_t ht_length, unsigned int key) {
 		if (ht[i] == key) {
 			ht[i] = 0;
 		} else {
-			size_t j = (i + 1) % ht_length;
-			while (j != i && ht[j] != 0) {
-				j = (j + 1) % ht_length;
-			}
-			if (j == i || ht[j] == 0) {
-				i = -1;
-			} else {
-				i = j;
-				ht[j] = 0;
-			}
-			i = -1;
+			i = rehashFilled(ht, ht_length, i, key);
 		}
 	} else {
 		i = -1;
 	}
 	return i;
 }
+
 
 // Imprimir tabela.
 void printHt(unsigned int ht[], size_t ht_length) {
@@ -64,6 +68,8 @@ void printHt(unsigned int ht[], size_t ht_length) {
 	printf("\b");
 }
 
+
+// Controlador.
 int main() {
 	unsigned int ht[11] = { 0 }; // Necessário para inicializar com zeros.
 	size_t ht_length = sizeof(ht) / sizeof(ht[0]);
