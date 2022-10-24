@@ -92,7 +92,11 @@ int main() {
 	printf("\n");
 	
 	// c) Inserção dos registros 40 e 3.
-	// insert(ht, ht_length, 40); insert(ht, ht_length, 3);
+	insert(ht, ht_length, 40);
+	insert(ht, ht_length, 3);
+	printf("c) ");
+	printHt(ht, ht_length);
+	printf("\n");
 
 	return 0;
 }
