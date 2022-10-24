@@ -58,6 +58,12 @@ int addToHt(unsigned int ht, size_t ht_length, unsigned int key) {
 // Remover elemento da tabela.
 int rmFromHt(unsigned int ht, size_t ht_length, unsigned int key) {
 	int i = (int) hash(ht_length, key);
+	if (ht[i] != NULL) {
+		i = rmFromList(ht[i], key);
+	} else {
+		i = -1;
+	}
+	return i;
 }
 
 
