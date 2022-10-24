@@ -120,18 +120,20 @@ int main() {
 	size_t length_test = sizeof(test) / sizeof(test[0]);
 
 	/* Tabela de 9 posições. */
+	printf("M = 9\n");
 	for (size_t i = 0; i < length_test; i++) {
 		addToHt(ht1, length_ht1, test[i]);
 	}
 	printHt(ht1, length_ht1);
-	printf("\n");
+	printf("\n\n");
 
 	/* Tabela de 11 posições. */
-	//for (size_t i = 0; i < length_test; i++) {
-	//	addToHt(ht2, length_ht2, test[i]);
-	//}
-	//printHt(ht2, length_ht2);
-	//printf("\n");
+	printf("M = 11\n");
+	for (size_t i = 0; i < length_test; i++) {
+		addToHt(ht2, length_ht2, test[i]);
+	}
+	printHt(ht2, length_ht2);
+	printf("\n");
 
 	return 0;
 }
