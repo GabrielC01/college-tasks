@@ -48,6 +48,10 @@ size_t hash(size_t ht_length, unsigned int key) {
 // Inserir elemento à tabela.
 int addToHt(unsigned int ht, size_t ht_length, unsigned int key) {
 	int i = (int) hash(ht_length, key);
+	if (ht[i] == NULL) {
+		ht[i] = newList();
+	}
+	addToList(ht[i], key);
 }
 
 
