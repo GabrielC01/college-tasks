@@ -32,6 +32,7 @@ void pop(StackNode* top) {
 	top = NULL;
 }
 
+// Controlador.
 int main() {
 	return 0;
 }
