@@ -4,33 +4,50 @@
 #include <stdlib.h>
 
 
-// Pilha (lista simplesmente encadeada).
-typedef struct StackNode StackNode;
+// Lista encadeada.
+typedef struct ListNode ListNode;
+typedef struct List List;
 
-struct StackNode {
+struct ListNode {
 	unsigned int data;
-	StackNode* next;
+	ListNode* previous;
+	ListNode* next;
+	
+};
+
+struct List {
+	ListNode* first;
+	ListNode* last;
 };
 
 
-// Inicializar nova pilha.
-StackNode* newStack() {
-	return (StackNode*) malloc(sizeof(StackNode));
+// Inicializar nova list.
+List* newList() {
+	List* list = (List*) malloc(sizeof(List));
+	list->first = NULL;
+	list->last = NULL;
+	return list;
 }
 
 
-// Inserir elemento à pilha.
-void addToStack(StackNode* top, unsigned int data) {
-	StackNode* new_node = (StackNode*) malloc(sizeof(StackNode));
-	new_node->data = data;
-	new_node->next = NULL;
-	top->next = new_node;
+// Inserir elemento à list'.
+void addToList(List* list, unsigned int data) {
+	ListNode* node = (ListNode*) malloc(sizeof(ListNode));
+	node->previous = NULL;
+	node->next = NULL;
+	if (list->first == NULL) {
+		list->first = node;
+	}
+	if (list->last != NULL) {
+		list->last->next = node;
+	}
+	list->last = node;
 }
 
 
-// Remover topo da pilha.
-void pop(StackNode* top) {
-	top = NULL;
+// Remover da fila.
+void dequeue(List* list) {
+	list->first = list->first->previous;
 }
 
 
@@ -48,6 +65,17 @@ int addToHt(unsigned int ht, size_t ht_length, unsigned int key) {
 	}
 	addToStack(ht[i], key);
 }
+
+
+// Remover elemento da tabela.
+int rmFromHt(unsigned int ht, size_t ht_length, unsigned int key) {
+	int i = (int) hash(ht_length, key);
+	
+	if (ht[i] != NULL) {
+		StackNode* curr_node = ht[i];
+	}
+}
+
 
 // Controlador.
 int main() {
