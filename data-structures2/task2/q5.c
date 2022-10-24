@@ -40,14 +40,14 @@ int rmFromList(List* list, unsigned int data) {
 
 
 // Função de dispersão.
-size_t hash(size_t ht_length, unsigned int key) {
-	return key % ht_length;
+size_t hash(size_t length_ht, unsigned int key) {
+	return key % length_ht;
 }
 
 
 // Inserir elemento à tabela.
-int addToHt(unsigned int ht, size_t ht_length, unsigned int key) {
-	int i = (int) hash(ht_length, key);
+int addToHt(unsigned int ht, size_t length_ht, unsigned int key) {
+	int i = (int) hash(length_ht, key);
 	if (ht[i] == NULL) {
 		ht[i] = newList();
 	}
@@ -56,8 +56,8 @@ int addToHt(unsigned int ht, size_t ht_length, unsigned int key) {
 
 
 // Remover elemento da tabela.
-int rmFromHt(unsigned int ht, size_t ht_length, unsigned int key) {
-	int i = (int) hash(ht_length, key);
+int rmFromHt(unsigned int ht, size_t length_ht, unsigned int key) {
+	int i = (int) hash(length_ht, key);
 	if (ht[i] != NULL) {
 		i = rmFromList(ht[i], key);
 	} else {
@@ -67,7 +67,33 @@ int rmFromHt(unsigned int ht, size_t ht_length, unsigned int key) {
 }
 
 
+// Imprimir tabela de dispersão.
+void printHt(List* ht, size_t length_ht) {
+	for (size_t i = 0; i < length_ht; i++) {
+		printf("%u ", ht[i]);
+	}
+	printf("\b");
+}
+
+
 // Controlador.
 int main() {
+	List* ht1[9] = { NULL };
+	List* ht2[11] = { NULL };
+	unsigned int test[] = { 5, 28, 19, 15, 20, 33, 12, 7, 10 };
+	size_t length_ht1 = sizeof(ht1) / sizeof(ht1[0]);
+	size_t length_ht2 = sizeof(ht2) / sizeof(h2[0]);
+	size_t length_test = sizeof(test) / sizeof(test[0]);
+
+	/* Tabela de 9 posições. */
+	for (size_t i = 0; i < length_test; i++) {
+		addToHt(ht1, length_ht1, test[i]);
+	}
+
+	/* Tabela de 11 posições. */
+	for (size_t i = 0; i < length_test; i++) {
+		addToht(ht2, length_ht2, test[i]);
+	}
+
 	return 0;
 }
