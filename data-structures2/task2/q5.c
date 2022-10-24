@@ -5,11 +5,11 @@
 
 
 // Lista encadeada.
-typedef struct ListNode ListNode;
-typedef struct List List;
+typedef struct ListNode ListNode; typedef struct List List;
 
 struct ListNode {
 	unsigned int data;
+	ListNode* previous;
 	ListNode* next;
 };
 
@@ -24,6 +24,7 @@ List* newList() {
 	List* list = (List*) malloc(sizeof(List));
 	list->first = NULL;
 	list->last = NULL;
+	return list;
 }
 
 
@@ -32,7 +33,13 @@ void addToList(List* list, unsigned int data) {
 	ListNode* new_node = (ListNode*) malloc(sizeof(ListNode));
 	new_node->data = data;
 	new_node->next = NULL;
-	list->last->next = new_node;
+	if (list->last != NULL) {
+		list->last->next = new_node;
+	}
+	if (list->first == NULL) {
+		list->first = new_node;
+	}
+	new_node->previous = list->last;
 	list->last = new_node;
 }
 
@@ -43,7 +50,24 @@ int rmFromList(List* list, unsigned int data) {
 	while (curr_node != NULL && curr_node->data != data) {
 		curr_node = curr_node->next;
 	}
-	return curr_node->data == data ? data : -1;
+	unsigned int value;
+	if (curr_node->data == data) {
+		value = curr_node->data;
+		curr_node->previous->next = curr_node->next;
+	} else {
+		value = -1;
+	}
+	return value;
+}
+
+
+// Imprimir lista.
+void printList(List* list) {
+	ListNode* curr_node = list->first;
+	while (curr_node != NULL) {
+		printf("%u ", curr_node->data);
+		curr_node = curr_node->next;
+	}
 }
 
 
@@ -78,9 +102,11 @@ int rmFromHt(List* ht[], size_t length_ht, unsigned int key) {
 // Imprimir tabela de dispersão.
 void printHt(List* ht[], size_t length_ht) {
 	for (size_t i = 0; i < length_ht; i++) {
-		printf("%u ", ht[i]);
+		if (ht[i] != NULL) {
+			printList(ht[i]);
+			printf("\n");
+		}
 	}
-	printf("\b");
 }
 
 
@@ -98,12 +124,14 @@ int main() {
 		addToHt(ht1, length_ht1, test[i]);
 	}
 	printHt(ht1, length_ht1);
+	printf("\n");
 
 	/* Tabela de 11 posições. */
-	for (size_t i = 0; i < length_test; i++) {
-		addToHt(ht2, length_ht2, test[i]);
-	}
-	printHt(ht2, length_ht2);
+	//for (size_t i = 0; i < length_test; i++) {
+	//	addToHt(ht2, length_ht2, test[i]);
+	//}
+	//printHt(ht2, length_ht2);
+	//printf("\n");
 
 	return 0;
 }
